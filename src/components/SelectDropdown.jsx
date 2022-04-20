@@ -1,10 +1,9 @@
 import React from 'react'
-import { useState } from 'react'
 
-function SelectDropdown({style,setShowModal,selectedLanguage}) {
+function SelectDropdown({stylea,setShowModal,selectedLanguage}) {
 
   return (
-    <div className='select-drop-down' onClick={()=>setShowModal(style)
+    <div className='select-drop-down' onClick={()=>setShowModal(stylea)
     }>
       <input value={selectedLanguage}/>
       <div className="down-area">

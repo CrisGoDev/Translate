@@ -42,7 +42,7 @@ function Modal({ setshowModal,Languages, choosenLanguage,setchoosenLanguage }) {
               <li
                 key={_index}
                 onClick={handleClick}
-                style={{
+                stylea={{
                   color: choosenLanguage === filteredLanguage ? '#8ab4f8' : null,
                 }}
               >

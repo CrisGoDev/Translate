@@ -1,8 +1,7 @@
 import React from 'react'
 import SelectDropdown from './SelectDropdown'
-import { useState } from 'react';
 
-function TextBox({ style, selectedLanguage, setshowModal, translatedText, textToTranslate, settextToTranslate, settranslatedText }) {
+function TextBox({ stylea, selectedLanguage, setshowModal, translatedText, textToTranslate, settextToTranslate, settranslatedText }) {
 
     const handleClick=()=>{
       settranslatedText('');
@@ -10,24 +9,24 @@ function TextBox({ style, selectedLanguage, setshowModal, translatedText, textTo
       settextToTranslate('');
     }
   return (
-    <div className={style}>
+    <div className={stylea}>
 
       <SelectDropdown
-        style={style}
+        style={stylea}
         setShowModal={setshowModal}
         selectedLanguage={selectedLanguage}
 
       />
 
       <textarea
-        placeholder={style === 'input' ? 'Enter Text' : 'Translation'}
+        placeholder={stylea === 'input' ? 'Enter Text' : 'Translation'}
 
-        disabled={style === 'output'}
+        disabled={stylea === 'output'}
         onChange={(e)=>settextToTranslate(e.target.value)}
-        value={style==='input'?textToTranslate:translatedText}
+        value={stylea==='input'?textToTranslate:translatedText}
 
       />
-      {style==='input' &&(
+      {stylea==='input' &&(
         <div className='delete' title='ELimina Todo' onClick={handleClick}>x</div>
       )}
     </div>

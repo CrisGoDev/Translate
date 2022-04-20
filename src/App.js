@@ -11,51 +11,20 @@ function App() {
   const [outputLanguage, setoutputLanguage] = useState("polish");
   const [Languages, setLanguages] = useState(null);
   const [textToTranslate, settextToTranslate] = useState("");
-  const [translatedText, settranslatedText] = useState("")
+  const [translatedText, settranslatedText] = useState("");
 
   var validation = {};
 
-  validation.language=false;
-  validation.text=false;
+  validation.language = false;
+  validation.text = false;
 
   const handleClick = () => {
     setinputLanguage(outputLanguage);
     setoutputLanguage(inputLanguage);
   };
 
-  const getLanguage = () => {
-    if (validation.language === false) {
-      validation.language = true;
-      
-      const options = {
-        method: "GET",
-        url: "https://google-translate20.p.rapidapi.com/languages",
-        headers: {
-          "X-RapidAPI-Host": "google-translate20.p.rapidapi.com",
-          "X-RapidAPI-Key":
-            "06689421e7mshbf3b8228c6d7a10p1c613djsn78e19ac784c2",
-        },
-      };
-
-      axios
-        .request(options)
-        .then(function (response) {
-          validation.language = false;
-          const arrayOfData = Object.keys(response.data.data).map(
-            (key) => response.data.data[key]
-          );
-          setLanguages(arrayOfData);
-        })
-        .catch(function (error) {
-          validation.language = false;
-          console.error(error);
-        });
-    }
-  };
-
   const translate = () => {
-
-    console.log('estoy traduciendo')
+    console.log("estoy traduciendo");
     const options = {
       method: "GET",
       url: "https://google-translate20.p.rapidapi.com/translate",
@@ -70,26 +39,50 @@ function App() {
       },
     };
 
-    if(validation.text===false){
-      validation.text=true
+    if (validation.text === false) {
+      validation.text = true;
       axios
-      .request(options)
-      .then(function (response) {
-        settranslatedText(response.data.data.translation)
-        validation.text=false;
-      })
-      .catch(function (error) {
-        console.error(error);
-        validation.text=false;
-      });
+        .request(options)
+        .then(function (response) {
+          settranslatedText(response.data.data.translation);
+          validation.text = false;
+        })
+        .catch(function (error) {
+          console.error(error);
+          validation.text = false;
+        });
     }
   };
 
-
-
   useEffect(() => {
+    const getLanguage = () => {
+      console.log('hola')
+        const options = {
+          method: "GET",
+          url: "https://google-translate20.p.rapidapi.com/languages",
+          headers: {
+            "X-RapidAPI-Host": "google-translate20.p.rapidapi.com",
+            "X-RapidAPI-Key":
+              "06689421e7mshbf3b8228c6d7a10p1c613djsn78e19ac784c2",
+          },
+        };
+
+        axios
+          .request(options)
+          .then(function (response) {
+            // validation.language = false;
+            const arrayOfData = Object.keys(response.data.data).map(
+              (key) => response.data.data[key]
+            );
+            setLanguages(arrayOfData);
+          })
+          .catch(function (error) {
+            // validation.language = false;
+            console.error(error);
+          });
+      }
     getLanguage();
-  }, []);
+  }, [Languages]);
 
   return (
     <div className="App">
@@ -97,12 +90,11 @@ function App() {
         <>
           <TextBox
             selectedLanguage={inputLanguage}
-            style={"input"}
+            stylea={"input"}
             setshowModal={setshowModal}
             textToTranslate={textToTranslate}
             settextToTranslate={settextToTranslate}
             settranslatedText={settranslatedText}
-
           />
 
           <div className="arrow-container" onClick={handleClick}>
@@ -114,11 +106,11 @@ function App() {
             setshowModal={setshowModal}
             translatedText={translatedText}
             settranslatedText={settranslatedText}
-            style={"output"}
+            stylea={"output"}
           />
 
           <div className="button-container" title="Traduce" onClick={translate}>
-            <Button/>
+            <Button />
           </div>
         </>
       )}
