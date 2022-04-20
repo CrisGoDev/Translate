@@ -14,17 +14,28 @@ function App() {
   const [translatedText, settranslatedText] = useState("");
 
   var validation = {};
+  
 
   validation.language = false;
   validation.text = false;
+  validation.load=false;
 
   const handleClick = () => {
     setinputLanguage(outputLanguage);
     setoutputLanguage(inputLanguage);
   };
 
+  function Loading() {
+    console.log(validation.load)
+    const isLoading = validation.load;
+    if (isLoading===true) {
+      return <div className="lds-dual-ring"></div>;
+    }
+  }
+
   const translate = () => {
-    console.log("estoy traduciendo");
+    validation.load=true;
+    console.log('Estoy traduciendo')
     const options = {
       method: "GET",
       url: "https://google-translate20.p.rapidapi.com/translate",
@@ -46,10 +57,12 @@ function App() {
         .then(function (response) {
           settranslatedText(response.data.data.translation);
           validation.text = false;
+          validation.load=false;
         })
         .catch(function (error) {
           console.error(error);
           validation.text = false;
+          validation.load=false
         });
     }
   };
@@ -108,6 +121,8 @@ function App() {
             settranslatedText={settranslatedText}
             stylea={"output"}
           />
+          <Loading/>
+          
 
           <div className="button-container" title="Traduce" onClick={translate}>
             <Button />

@@ -15,7 +15,6 @@ function TextBox({ stylea, selectedLanguage, setshowModal, translatedText, textT
         style={stylea}
         setShowModal={setshowModal}
         selectedLanguage={selectedLanguage}
-
       />
 
       <textarea
