@@ -2,7 +2,7 @@ import TextBox from "./components/TextBox";
 import Arrows from "./components/Arrows";
 import Button from "./components/Button";
 import Modal from "./components/Modal";
-import { useState, useEffect } from "react";
+import { useState, useEffect,Suspense } from "react";
 import axios from "axios";
 
 function App() {
@@ -14,11 +14,10 @@ function App() {
   const [translatedText, settranslatedText] = useState("");
 
   var validation = {};
-  
 
   validation.language = false;
   validation.text = false;
-  validation.load=false;
+  validation.load = false;
 
   const handleClick = () => {
     setinputLanguage(outputLanguage);
@@ -26,16 +25,13 @@ function App() {
   };
 
   function Loading() {
-    console.log(validation.load)
     const isLoading = validation.load;
-    if (isLoading===true) {
+    if (isLoading === true) {
       return <div className="lds-dual-ring"></div>;
     }
   }
 
   const translate = () => {
-    validation.load=true;
-    console.log('Estoy traduciendo')
     const options = {
       method: "GET",
       url: "https://google-translate20.p.rapidapi.com/translate",
@@ -57,43 +53,42 @@ function App() {
         .then(function (response) {
           settranslatedText(response.data.data.translation);
           validation.text = false;
-          validation.load=false;
+          validation.load = false;
         })
         .catch(function (error) {
           console.error(error);
           validation.text = false;
-          validation.load=false
+          validation.load = false;
         });
     }
   };
 
   useEffect(() => {
     const getLanguage = () => {
-      console.log('hola')
-        const options = {
-          method: "GET",
-          url: "https://google-translate20.p.rapidapi.com/languages",
-          headers: {
-            "X-RapidAPI-Host": "google-translate20.p.rapidapi.com",
-            "X-RapidAPI-Key":
-              "06689421e7mshbf3b8228c6d7a10p1c613djsn78e19ac784c2",
-          },
-        };
+      console.log("hola");
+      const options = {
+        method: "GET",
+        url: "https://google-translate20.p.rapidapi.com/languages",
+        headers: {
+          "X-RapidAPI-Host": "google-translate20.p.rapidapi.com",
+          "X-RapidAPI-Key":
+            "06689421e7mshbf3b8228c6d7a10p1c613djsn78e19ac784c2",
+        },
+      };
 
-        axios
-          .request(options)
-          .then(function (response) {
-            // validation.language = false;
-            const arrayOfData = Object.keys(response.data.data).map(
-              (key) => response.data.data[key]
-            );
-            setLanguages(arrayOfData);
-          })
-          .catch(function (error) {
-            // validation.language = false;
-            console.error(error);
-          });
-      }
+      axios
+        .request(options)
+        .then(function (response) {
+          // validation.language = false;
+          const arrayOfData = Object.keys(response.data.data).map(
+            (key) => response.data.data[key]
+          );
+          setLanguages(arrayOfData);
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
+    };
     getLanguage();
   }, [Languages]);
 
@@ -114,15 +109,20 @@ function App() {
             <Arrows />
           </div>
 
+         
+
+          <Suspense fallback={<div>Loading...</div>}>
           <TextBox
             selectedLanguage={outputLanguage}
             setshowModal={setshowModal}
             translatedText={translatedText}
             settranslatedText={settranslatedText}
             stylea={"output"}
+            loadi={validation.load}
           />
+          </Suspense>
+
           <Loading/>
-          
 
           <div className="button-container" title="Traduce" onClick={translate}>
             <Button />
