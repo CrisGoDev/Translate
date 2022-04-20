@@ -128,10 +128,10 @@ function App() {
           Languages={Languages}
           setshowModal={setshowModal}
           choosenLanguage={
-            showModal == "input" ? inputLanguage : outputLanguage
+            showModal === "input" ? inputLanguage : outputLanguage
           }
           setchoosenLanguage={
-            showModal == "input" ? setinputLanguage : setoutputLanguage
+            showModal === "input" ? setinputLanguage : setoutputLanguage
           }
         />
       )}

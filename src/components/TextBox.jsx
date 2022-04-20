@@ -20,14 +20,14 @@ function TextBox({ style, selectedLanguage, setshowModal, translatedText, textTo
       />
 
       <textarea
-        placeholder={style == 'input' ? 'Enter Text' : 'Translation'}
+        placeholder={style === 'input' ? 'Enter Text' : 'Translation'}
 
-        disabled={style == 'output'}
+        disabled={style === 'output'}
         onChange={(e)=>settextToTranslate(e.target.value)}
-        value={style=='input'?textToTranslate:translatedText}
+        value={style==='input'?textToTranslate:translatedText}
 
       />
-      {style=='input' &&(
+      {style==='input' &&(
         <div className='delete' title='ELimina Todo' onClick={handleClick}>x</div>
       )}
     </div>
